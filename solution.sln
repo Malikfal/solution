@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solution", "solution\solution.csproj", "{E82FD493-A282-43E5-B394-EC0223823D04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTypes_Task1", "solution\DataTypes_Task1.csproj", "{E82FD493-A282-43E5-B394-EC0223823D04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTypes_Task2", "DataTypes_Task2\DataTypes_Task2.csproj", "{3EC0EB05-316A-4E6D-B914-26EC3E4B37B0}"
 EndProject
