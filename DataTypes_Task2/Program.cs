@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace DataTypes_Task2
 {
+    /// <summary>
+    /// Программа формирующая ромб заднного размера
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Точка входа в программу
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             string diamant = s_CreateDiamant(7);
@@ -16,6 +23,11 @@ namespace DataTypes_Task2
 
         }
 
+        /// <summary>
+        /// Формирует строковое представление ромба заданного размера
+        /// </summary>
+        /// <param name="size">Размер ромба</param>
+        /// <returns>Строка с ромбом из символов 'x'</returns>
         public static string s_CreateDiamant(int size)
         {
 
@@ -33,6 +45,10 @@ namespace DataTypes_Task2
             return result.ToString();
         }
 
+        /// <summary>
+        /// Выводит ромб в консоль
+        /// </summary>
+        /// <param name="diamant">Строка с ромбом</param>
         public static void s_PrintDiamant(string diamant)
         {
             Console.Write(diamant);

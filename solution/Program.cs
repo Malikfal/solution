@@ -6,36 +6,40 @@ using System.Threading.Tasks;
 
 namespace solution
 {
+    /// <summary>
+    /// Программа для рассчёта сложных процентов по вкладу
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Точка входа в программу
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            string diamant = s_CreateDiamant(7);
-            s_PrintDiamant(diamant);
-
+            Console.WriteLine(CalculateInterest(1000, 3, 10));
 
         }
 
-        public static string s_CreateDiamant(int size)
+        /// <summary>
+        /// Рассчитывает рост вклада по годам с учетом сложных процентов
+        /// </summary>
+        /// <param name="initial_deposit">Начальная сумма вклада</param>
+        /// <param name="years">Количество лет</param>
+        /// <param name="interest_rate">Годовая процентная ставка</param>
+        /// <returns>Строка с суммой вклада по каждому году</returns>
+        public static string CalculateInterest(double initial_deposit, int years, double interest_rate)
         {
+            StringBuilder result = new StringBuilder();
+            double currentAmount = initial_deposit;
 
-            var result = new StringBuilder();
-            int mid = size / 2;
-            for (int i = 0; i < size; i++)
+            for (int i = 1; i <= years; i++)
             {
-                for (int j = 0; j < size; j++)
-                {
-                    if (Math.Abs(i - mid) + Math.Abs(j - mid) == mid) result.Append("x");
-                    else result.Append(" ");
-                }
-                result.AppendLine();
+                currentAmount *= (1 + interest_rate / 100);
+                result.AppendLine($"Год {i}: {currentAmount:F2} руб.");
             }
-            return result.ToString();
-        }
 
-        public static void s_PrintDiamant(string diamant)
-        {
-            Console.Write(diamant);
+            return result.ToString();
         }
     }
 }
