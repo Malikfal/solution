@@ -25,6 +25,7 @@ namespace Task6_WorkWithDataBase
 
             Console.WriteLine($"Сервер: {connectionString.Split(';')[0]}\n");
 
+            // 0) Выбор технологии
             Console.WriteLine("Выберите технологию доступа:");
             Console.WriteLine("1 - ADO.NET");
             Console.WriteLine("2 - Entity Framework");
