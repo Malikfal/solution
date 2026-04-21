@@ -2,6 +2,8 @@
 using Task6_WorkWithDataBase.Data;
 using Task6_WorkWithDataBase.Models;
 using Task6_WorkWithDataBase.Repositories;
+using Bogus;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Task6_WorkWithDataBase
 {
@@ -25,44 +27,32 @@ namespace Task6_WorkWithDataBase
 
             Console.WriteLine($"Сервер: {connectionString.Split(';')[0]}\n");
 
-            // 0) Выбор технологии
-            Console.WriteLine("Выберите технологию доступа:");
-            Console.WriteLine("1 - ADO.NET");
-            Console.WriteLine("2 - Entity Framework");
-            Console.WriteLine("0 - Выход");
-            Console.Write("Ваш выбор: ");
-            string? choiceTech = Console.ReadLine();
-            string technologyName = "";
-            IGameRepository? repository = null;
-            if (choiceTech == "1")
-            {
-                repository = new GameAdoRepository(connectionString);
-                technologyName = "ADO.NET";
-            }
-            if (choiceTech == "2")
-            {
-                repository = new GameEfRepository(connectionString);
-                technologyName = "Entity Framework";
-            }
-            if (choiceTech == "0")
-            {
-                return;
-            }
+            // Проверка
+            IGameRepository? repository = new GameAdoRepository(connectionString);
+            //repository = new GameEfRepository(connectionString);
 
-
-            if (repository == null)
-            {
-                Console.WriteLine("Неверный выбор.\n");
-                return;
-            }
 
             // 1) Добавление новой игры
-            var newGame = s_ReadGameFromConsole();
-            repository.Create(newGame);
-            Console.WriteLine($"Игра '{newGame.Title}' добавлена. ID: {newGame.GameID}");
+            var faker = new Faker();
+            var gameFaker = new Faker<Game>()
+                .StrictMode(true)
+                .RuleFor(g => g.GameID, f => f.Random.Guid())                     
+                .RuleFor(g => g.Title, f => f.Commerce.ProductName())
+                .RuleFor(g => g.MinPlayers, f => f.Random.Int(1, 8))
+                .RuleFor(g => g.MaxPlayers, f => (f.Random.Int(2, 10)))
+                .RuleFor(g => g.CreatedDate, f => f.Date.Past(5))
+                .RuleFor(g => g.IsActive, f => f.Random.Bool());
+
+            var fakeGame = gameFaker.Generate();
+            repository.Create(fakeGame);
+            Console.WriteLine($"Игра '{fakeGame.Title}' добавлена. ID: {fakeGame.GameID}");
 
             // 2) Вывод указанного кол-ва игр
-            var games = repository.ReadTop(int.Parse(s_ReadString("Введите кол-во игр для вывода: ")));
+
+            Random random = new Random();
+            int gamesCount = random.Next(1, 10);
+            var games = repository.ReadTop(gamesCount);
+            Console.WriteLine($"Первые {gamesCount} игр");
             if (!games.Any())
             {
                 Console.WriteLine("Игры отсутствуют.");
@@ -72,75 +62,41 @@ namespace Task6_WorkWithDataBase
             {
                 foreach (var g in games)
                 {
-                    s_PrintGameInfo(g);
+                    Console.WriteLine(g.ToString());
                 }
 
             }
 
             // 3) Вывод игры по GUID
-            if (Guid.TryParse(s_ReadString("Введите GUID игры: "), out Guid readId))
+            Console.WriteLine("Вывод игры по Guid: A0A24A16-EEED-40FE-9D5C-12700597995B");
+            Guid readId = Guid.Parse("A0A24A16-EEED-40FE-9D5C-12700597995B");
+            var game = repository.Read(readId);
+            if (game == null)
             {
-                var game = repository.Read(readId);
-                if (game == null)
-                {
-                    Console.WriteLine("Игра не найдена.");
-                }
-                else
-                {
-                    s_PrintGameInfo(game);
-                }
-
+                Console.WriteLine("Игра не найдена.");
             }
             else
             {
-                Console.WriteLine("Неверный формат GUID.");
+                Console.WriteLine(game.ToString());
             }
 
 
             // 4) Обновление игры по GUID
-            if (Guid.TryParse(s_ReadString("Введите GUID игры для обновления: "), out Guid updateId))
+            var existing = repository.Read(readId);
+            Console.WriteLine("Была игра: " + existing.ToString());
+            if (existing == null)
             {
-                var existing = repository.Read(updateId);
-                if (existing == null)
-                {
-                    Console.WriteLine("Игра не найдена.");
-                }
-                Console.WriteLine($"Текущее название: {existing.Title}");
-                var updated = s_ReadGameFromConsole();
-                updated.GameID = updateId;
-                repository.Update(updated);
-                Console.WriteLine("Игра обновлена.");
+                Console.WriteLine("Игра не найдена.");
             }
-            else
-            {
-                Console.WriteLine("Неверный GUID.");
-            }
+            Console.WriteLine($"Текущее название: {existing.Title}");
+            var updated = gameFaker.Generate();
+            updated.GameID = existing.GameID;
+            repository.Update(updated);
+            Console.WriteLine($"Игра обновлена: {updated.ToString()}");
 
-
-            // 5) Удаление игры по GUID
-            if (Guid.TryParse(s_ReadString("Введите GUID игры для удаления: "), out Guid deleteId))
-            {
-                repository.Delete(deleteId);
-                Console.WriteLine("Игра удалена (если существовала).");
-            }
-            else
-            {
-                Console.WriteLine("Неверный GUID.");
-            }
 
         }
 
-        /// <summary>
-        /// Выводит информацию о игре
-        /// </summary>
-        /// <param name="game">Заполненный объект Game</param>
-        private static void s_PrintGameInfo(Game game)
-        {
-            Console.WriteLine($"ID: {game.GameID}," +
-                            $" Название: {game.Title}," +
-                            $" Игроков: {game.MinPlayers}–{game.MaxPlayers}," +
-                            $" Активна: {game.IsActive}");
-        }
 
         /// <summary>
         /// Считывает с консоли данные для новой игры

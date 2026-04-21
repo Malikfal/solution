@@ -5,7 +5,7 @@ namespace OOP
     internal partial class Program
     {
         /// <summary>
-        /// Класс, представляющий товар с его характеристиками
+        /// Товар
         /// </summary>
         public class Product
         {
@@ -21,7 +21,7 @@ namespace OOP
             private const int DEFAULT_SHELF_LIFE_DAYS = 30;
 
             /// <summary>
-            /// Конструктор по умолчанию, устанавливает значения по умолчанию
+            /// Инициализирует продукт со значениями по умолчанию
             /// </summary>
             public Product()
             {
@@ -33,7 +33,7 @@ namespace OOP
             }
 
             /// <summary>
-            /// Конструктор с параметрами для инициализации всех полей товара
+            /// Инициализирует продукт по заданным значениям
             /// </summary>
             /// <param name="name">Наименование товара</param>
             /// <param name="manufacturer">Производитель</param>
@@ -58,7 +58,7 @@ namespace OOP
                 get => _name;
                 set
                 {
-                    if (value == "")
+                    if (string.IsNullOrEmpty(value))
                     {
                         throw new ArgumentException("Название не должно быть пустым");
                     }
@@ -74,7 +74,7 @@ namespace OOP
                 get => _manufacturer;
                 set
                 {
-                    if (value == "")
+                    if (string.IsNullOrEmpty(value))
                     {
                         throw new ArgumentException("Производетель не должен быть пустым");
                     }
@@ -110,8 +110,7 @@ namespace OOP
                     if (value.Date > DateTime.Now.Date)
                     {
                         throw new ArgumentException("Дата производства не может быть позже текущего дня");
-                    }
-                        
+                    }                
                     
                     _productionDate = value;
                 }
@@ -125,16 +124,13 @@ namespace OOP
                 get => _shelfLife;
                 set
                 {
-                    if (value >= _productionDate)
-                    {
-                        _shelfLife = value;
-                    }
-
-                    else
+                    if (value < _productionDate)
                     {
                         throw new ArgumentException("Дата окончания срока годности не может быть раньше даты производства");
                     }
-                        
+
+                    _shelfLife = value;
+
                 }
             }
 

@@ -9,18 +9,22 @@ using Task6_WorkWithDataBase.Models;
 namespace Task6_WorkWithDataBase.Repositories
 {
     /// <summary>
-    /// Реализация репозитория с использованием Entity Framework
+    /// Репозиторий Entity Framework
     /// </summary>
     public class GameEfRepository : IGameRepository
     {
         private readonly AppDbContext _context;
 
         /// <summary>
-        /// Конструктор, создающий контекст EF Core на основе строки подключения
+        /// Создаёт контекст EF Core на основе строки подключения
         /// </summary>
         /// <param name="connectionString">Строка подключения к SQL Server</param>
         public GameEfRepository(string connectionString)
         {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentException("Строка подключения не задана");
+            }
             _context = new AppDbContext(connectionString);
         }
 
@@ -29,6 +33,11 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public void Create(Game game)
         {
+            if (game == null)
+            {
+                throw new ArgumentException("Запись не задана");
+            }
+
             if (game.GameID == Guid.Empty)
             {
                 game.GameID = Guid.NewGuid();
@@ -42,6 +51,11 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public Game? Read(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("GUID не задан");
+            }
+
             return _context.Games.Find(id);
         }
 
@@ -63,6 +77,11 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public void Update(Game game)
         {
+            if (game == null)
+            {
+                throw new ArgumentException("Запись не задана");
+            }
+
             var existing = _context.Games.Find(game.GameID);
             if (existing != null)
             {
@@ -80,6 +99,11 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public void Delete(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("GUID не задан");
+            }
+
             var game = _context.Games.Find(id);
             if (game != null)
             {

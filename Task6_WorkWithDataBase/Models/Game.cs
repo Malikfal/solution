@@ -3,7 +3,7 @@
 namespace Task6_WorkWithDataBase.Models
 {
     /// <summary>
-    /// Представляет сущность "Игра" из таблицы Games базы данных BoardGamesClub
+    /// Игра
     /// </summary>
     public class Game
     {
@@ -36,5 +36,15 @@ namespace Task6_WorkWithDataBase.Models
         /// Флаг активности записи
         /// </summary>
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Текстовый вывод Game
+        /// </summary>
+        /// <returns>Основная информация о игре</returns>
+        public override string ToString()
+        {
+            return $"GameID: {GameID}, Title: {Title}, Players: {MinPlayers}-{MaxPlayers}," +
+                $" Created: {CreatedDate:yyyy-MM-dd HH:mm:ss}, Active: {IsActive}";
+        }
     }
 }

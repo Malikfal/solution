@@ -10,18 +10,22 @@ using Task6_WorkWithDataBase.Models;
 namespace Task6_WorkWithDataBase.Repositories
 {
     /// <summary>
-    /// Реализация репозитория с использованием ADO.NET
+    /// Репозиторий ADO.NET
     /// </summary>
     public class GameAdoRepository : IGameRepository
     {
         private readonly string _connectionString;
 
         /// <summary>
-        /// Конструктор, принимающий строку подключения к базе данных
+        /// Принимает строку подключения к базе данных
         /// </summary>
         /// <param name="connectionString">Строка подключения SQL Server</param>
         public GameAdoRepository(string connectionString)
         {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentException("Строка подключения не задана");
+            }
             _connectionString = connectionString;
         }
 
@@ -30,6 +34,10 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public void Create(Game game)
         {
+            if (game == null)
+            {
+                throw new ArgumentException("Запись не задана");
+            }
             const string sql = @"
             INSERT INTO Games (GameID, Title, MinPlayers, MaxPlayers, CreatedDate, IsActive)
             VALUES (@GameID, @Title, @MinPlayers, @MaxPlayers, @CreatedDate, @IsActive)";
@@ -52,7 +60,21 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public Game? Read(Guid id)
         {
-            const string sql = "SELECT GameID, Title, MinPlayers, MaxPlayers, CreatedDate, IsActive FROM Games WHERE GameID = @GameID";
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("GUID не задан");
+            }
+            const string sql = """
+                SELECT 
+                    GameID
+                    , Title
+                    , MinPlayers
+                    , MaxPlayers
+                    , CreatedDate
+                    , IsActive
+                FROM Games 
+                WHERE GameID = @GameID
+                """;
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
             using var cmd = new SqlCommand(sql, conn);
@@ -84,7 +106,16 @@ namespace Task6_WorkWithDataBase.Repositories
             }
 
             var games = new List<Game>();
-            string sql = $"SELECT TOP ({count}) GameID, Title, MinPlayers, MaxPlayers, CreatedDate, IsActive FROM Games";
+            string sql = $"""
+                SELECT TOP ({count}) 
+                    GameID
+                    , Title
+                    , MinPlayers
+                    , MaxPlayers
+                    , CreatedDate
+                    , IsActive
+                FROM Games
+                """;
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
             using var cmd = new SqlCommand(sql, conn);
@@ -109,11 +140,20 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public void Update(Game game)
         {
+            if (game == null)
+            {
+                throw new ArgumentException("Запись не задана");
+            }
+
             const string sql = @"
-            UPDATE Games 
-            SET Title = @Title, MinPlayers = @MinPlayers, MaxPlayers = @MaxPlayers, 
-                CreatedDate = @CreatedDate, IsActive = @IsActive
-            WHERE GameID = @GameID";
+                UPDATE Games 
+                SET 
+                    Title = @Title
+                    , MinPlayers = @MinPlayers
+                    , MaxPlayers = @MaxPlayers
+                    , CreatedDate = @CreatedDate
+                    , IsActive = @IsActive
+                WHERE GameID = @GameID";
 
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
@@ -132,7 +172,13 @@ namespace Task6_WorkWithDataBase.Repositories
         /// </summary>
         public void Delete(Guid id)
         {
-            const string sql = "DELETE FROM Games WHERE GameID = @GameID";
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("GUID не задан");
+            }
+            const string sql = @"
+                DELETE FROM Games
+                WHERE GameID = @GameID";
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
             using var cmd = new SqlCommand(sql, conn);

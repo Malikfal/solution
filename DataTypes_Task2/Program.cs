@@ -18,9 +18,7 @@ namespace DataTypes_Task2
         static void Main(string[] args)
         {
             string diamant = s_CreateDiamant(7);
-            s_PrintDiamant(diamant);
-
-
+            Console.WriteLine(diamant);
         }
 
         /// <summary>
@@ -43,15 +41,6 @@ namespace DataTypes_Task2
                 result.AppendLine();
             }
             return result.ToString();
-        }
-
-        /// <summary>
-        /// Выводит ромб в консоль
-        /// </summary>
-        /// <param name="diamant">Строка с ромбом</param>
-        public static void s_PrintDiamant(string diamant)
-        {
-            Console.Write(diamant);
         }
     }
 }

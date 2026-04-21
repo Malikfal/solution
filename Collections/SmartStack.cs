@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,17 @@ namespace Collections
     /// <typeparam name="T">Тип элементов стека</typeparam>
     internal class SmartStack<T> : IEnumerable<T>
     {
+        /// <summary>
+        /// Массив для хранения элементов стека
+        /// </summary>
         private T[] _items;
+        /// <summary>
+        /// Количество реально находящихся в стеке элементов
+        /// </summary>
         private int _count;
 
         /// <summary>
-        /// Конструктор по умолчанию, начальная емкость 4
+        /// Инициализация с начальной ёмкостью 4
         /// </summary>
         public SmartStack()
         {
@@ -26,21 +33,30 @@ namespace Collections
         }
 
         /// <summary>
-        /// Конструктор с указанием начальной емкости
+        /// Инициализация с указанием начальной ёмкости
         /// </summary>
         /// <param name="capacity">Начальная емкость стека</param>
         public SmartStack(int capacity)
         {
+            if (capacity <= 0)
+            {
+                throw new ArgumentException("Ёмкость должна быть больше 0");
+            }
             _items = new T[capacity];
             _count = 0;
         }
 
         /// <summary>
-        /// Конструктор, заполняющий стек элементами из коллекции
+        /// Инициализация с заполнением стека элементами из коллекции
         /// </summary>
         /// <param name="collection">Коллекция элементов для добавления</param>
         public SmartStack(IEnumerable<T> collection)
         {
+            if (collection == null)
+            {
+                throw new ArgumentException("Коллекция не задана");
+            }
+
             int count = 0;
             foreach (var item in collection) { 
                 count++;
@@ -73,6 +89,11 @@ namespace Collections
         /// <param name="item">Добавляемый элемент</param>
         public void Push(T item)
         {
+            if (item == null)
+            {
+                throw new ArgumentException("Элемент не задан");
+            }
+
             if (_count == _items.Length)
             {
                 Array.Resize(ref _items, _items.Length * 2);
@@ -86,6 +107,11 @@ namespace Collections
         /// <param name="collection">Коллекция добавляемых элементов</param>
         public void PushRange(IEnumerable<T> collection)
         {
+            if (collection == null)
+            {
+                throw new ArgumentException("Коллекция не задана");
+            }
+
             int countItems = 0;
             foreach (T item in collection) {  
                 countItems++;

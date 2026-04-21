@@ -16,6 +16,10 @@ namespace Task6_WorkWithDataBase.Data
         /// <param name="connectionString">Строка подключения к SQL Server</param>
         public AppDbContext(string connectionString)
         {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new ArgumentException("Строка подключения не задана");
+            }
             _connectionString = connectionString;
         }
 
