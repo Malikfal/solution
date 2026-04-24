@@ -1,4 +1,6 @@
-﻿namespace TimeTrackingAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace TimeTrackingAPI.Models
 {
     /// <summary>
     /// Проводка
@@ -33,6 +35,7 @@
         /// <summary>
         /// Задача проводки
         /// </summary>
+        [JsonIgnore]
         public TaskItem? Task { get; set; }
     }
 }

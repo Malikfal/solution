@@ -1,4 +1,6 @@
-﻿namespace TimeTrackingAPI.Models
+﻿using System.Text.Json.Serialization;
+
+namespace TimeTrackingAPI.Models
 {
     /// <summary>
     /// Задача
@@ -28,11 +30,13 @@
         /// <summary>
         /// Проект задачи
         /// </summary>
+        [JsonIgnore]
         public Project? Project { get; set; }
 
         /// <summary>
         /// Проводки времени по этой задаче
         /// </summary>
+        [JsonIgnore]
         public ICollection<TimeEntry>? TimeEntries { get; set; }
     }
 }
