@@ -17,10 +17,13 @@ namespace TimeTrackingAPI.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
+        /// <summary>
+        /// Контекст БД
+        /// </summary>
         private readonly ApplicationDbContext _context;
 
         /// <summary>
-        /// Инициализирует контроллер
+        /// Инициализирует контроллер проектов
         /// </summary>
         /// <param name="context">Контекст БД</param>
         /// <exception cref="ArgumentNullException">Выбрасывается, если контекст не задан</exception>
