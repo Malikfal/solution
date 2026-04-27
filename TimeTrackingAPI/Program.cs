@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using TimeTrackingAPI.Data;
 using TimeTrackingAPI.Services;
 
@@ -18,6 +19,23 @@ namespace TimeTrackingAPI
                     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
                     options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 });
+
+            // Подключение фронтенда
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
+            // Фикс проблем с сериализацией
+            builder.Services.ConfigureHttpJsonOptions(options =>
+            {
+                options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            });
 
             // Swagger с автодокументацией XML
             builder.Services.AddEndpointsApiExplorer();
@@ -44,6 +62,7 @@ namespace TimeTrackingAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowFrontend");
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
