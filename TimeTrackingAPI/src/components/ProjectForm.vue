@@ -84,7 +84,7 @@ const submit = async () => {
   animation: fadeIn 0.2s ease;
 }
 
-
+/* Карточка */
 .modal-card {
   background: #ffffff;
   border-radius: 20px;
@@ -94,7 +94,6 @@ const submit = async () => {
   overflow: hidden;
   animation: slideUp 0.25s ease;
 }
-
 
 .modal-header {
   display: flex;
@@ -125,7 +124,6 @@ const submit = async () => {
   transform: scale(1.1);
 }
 
-/* Тело формы */
 .modal-body {
   padding: 1.5rem;
 }
@@ -169,7 +167,7 @@ const submit = async () => {
   color: #2d3748;
 }
 
-
+/* Кнопки */
 .modal-footer {
   padding: 1rem 1.5rem 1.5rem;
   display: flex;

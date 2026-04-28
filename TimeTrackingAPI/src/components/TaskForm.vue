@@ -97,6 +97,7 @@ const submit = async () => {
 </script>
 
 <style scoped>
+/* Затемнённый фон */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -112,7 +113,7 @@ const submit = async () => {
   animation: fadeIn 0.2s ease;
 }
 
-
+/* Карточка */
 .modal-card {
   background: #ffffff;
   border-radius: 20px;
@@ -152,7 +153,7 @@ const submit = async () => {
   transform: scale(1.1);
 }
 
-
+/* Тело формы */
 .modal-body {
   padding: 1.5rem;
 }
@@ -184,7 +185,7 @@ const submit = async () => {
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 
-
+/* Чекбокс */
 .checkbox-label {
   display: flex;
   align-items: flex-start;
@@ -203,6 +204,7 @@ const submit = async () => {
   color: #2d3748;
 }
 
+/* Кнопки */
 .modal-footer {
   padding: 1rem 1.5rem 1.5rem;
   display: flex;
