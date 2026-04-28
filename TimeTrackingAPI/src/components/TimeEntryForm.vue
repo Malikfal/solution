@@ -118,7 +118,7 @@ const submit = async () => {
 </script>
 
 <style scoped>
-/* Затемнённый фон */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -134,7 +134,7 @@ const submit = async () => {
   animation: fadeIn 0.2s ease;
 }
 
-/* Карточка */
+
 .modal-card {
   background: #ffffff;
   border-radius: 20px;
@@ -145,7 +145,7 @@ const submit = async () => {
   animation: slideUp 0.25s ease;
 }
 
-/* Заголовок */
+
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -209,7 +209,7 @@ const submit = async () => {
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 
-/* Специфично для number – скрыть стрелки (опционально) */
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -218,7 +218,7 @@ input[type="number"]::-webkit-outer-spin-button {
   opacity: 0.5;
 }
 
-/* Нижние кнопки */
+
 .modal-footer {
   padding: 1rem 1.5rem 1.5rem;
   display: flex;
@@ -254,7 +254,7 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: 0 4px 12px rgba(30, 90, 133, 0.3);
 }
 
-/* Анимации */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

@@ -97,7 +97,6 @@ const submit = async () => {
 </script>
 
 <style scoped>
-/* Затемнённый фон */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -113,7 +112,7 @@ const submit = async () => {
   animation: fadeIn 0.2s ease;
 }
 
-/* Карточка */
+
 .modal-card {
   background: #ffffff;
   border-radius: 20px;

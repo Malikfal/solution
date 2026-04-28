@@ -71,7 +71,7 @@ const closeForm = () => {
 .project-item {
   display: flex;
   align-items: center;
-  gap: 1rem;               /* расстояние между названием, кодом, статусом и кнопками */
+  gap: 1rem;
   padding: 0.5rem 0;
   border-bottom: 1px solid #eee;
 }
@@ -82,7 +82,7 @@ const closeForm = () => {
 
 .action-buttons {
   display: flex;
-  gap: 0.5rem;             /* расстояние между кнопками ✏️ и ❌ */
+  gap: 0.5rem;
 }
 
 button {

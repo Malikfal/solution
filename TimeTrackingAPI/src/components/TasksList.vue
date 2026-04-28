@@ -129,7 +129,7 @@ const closeForm = () => {
 .action-buttons {
   display: flex;
   gap: 0.5rem;
-  margin-left: auto; /* прижимает кнопки вправо, если нужно */
+  margin-left: auto;
 }
 
 button {

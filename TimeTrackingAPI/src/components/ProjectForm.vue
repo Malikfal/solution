@@ -69,7 +69,6 @@ const submit = async () => {
 </template>
 
 <style scoped>
-/* Затемнённый фон */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -85,7 +84,7 @@ const submit = async () => {
   animation: fadeIn 0.2s ease;
 }
 
-/* Карточка модального окна */
+
 .modal-card {
   background: #ffffff;
   border-radius: 20px;
@@ -96,7 +95,7 @@ const submit = async () => {
   animation: slideUp 0.25s ease;
 }
 
-/* Заголовок */
+
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -170,7 +169,7 @@ const submit = async () => {
   color: #2d3748;
 }
 
-/* Нижние кнопки */
+
 .modal-footer {
   padding: 1rem 1.5rem 1.5rem;
   display: flex;
@@ -206,7 +205,7 @@ const submit = async () => {
   box-shadow: 0 4px 12px rgba(30, 90, 133, 0.3);
 }
 
-/* Анимации */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
